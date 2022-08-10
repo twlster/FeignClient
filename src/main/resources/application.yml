@@ -1,0 +1,32 @@
+feign:
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+      myResourceClient:
+        requestInterceptors:
+          - edu.example.feignclient.client.interceptors.TokenInterceptor
+        errorDecoder: edu.example.feignclient.client.error.CustomErrorDecoder
+
+client:
+  myResources:
+    baseUrl: http://localhost:8080/FpDualWebService/api/
+    path: /myresource
+    nombrePath: /myresource/nombre/{name}
+
+logging:
+  level:
+    edu:
+      example:
+        feignclient: debug
+server:
+  port: 8081
